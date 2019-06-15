@@ -1,5 +1,5 @@
-# Svbtle-Blogger
-Svbtle Blogger Teması (Svbtle Blogger Template)
+# Paper
+Paper Blogger/Blogspot Template (2019)
 
 
-![Svbtle-Blogger](https://1.bp.blogspot.com/-UiXW4TarWqs/XIF7eNuJf7I/AAAAAAAAG2A/P1y1gWY8cVUu9vg88ZBXHhnvMgw1mmdAwCLcBGAs/s1600/Svbtle-blogger-temasi.png)
+![Paper Blogger/Blogspot Template](https://2.bp.blogspot.com/-z_L7SB1fFJA/XQRK7TRWgTI/AAAAAAAAG6M/aqukCHHIjwoVeEPplezDVxLgDWz4laN2gCLcBGAs/s1600/papertemplate.png)
