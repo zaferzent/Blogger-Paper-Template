@@ -8,7 +8,7 @@
 
 <b:switch var='data:blog.pageType'>
 <b:case value='error_page'/>
-<title>404 Hata - Sayfa bulunamadı.</title>
+<title>404 Error - Not Found.</title>
 <b:case value='item'/>
   <title><data:blog.pageName/> - <data:blog.title/></title>
 <b:case value='static_page'/>
@@ -32,6 +32,7 @@
  * A simple, clean, flexible Hugo theme
  * https://github.com/nanxiaobei/hugo-paper
  * Designed by MR.LEE (https://mrlee.me/)
+ * Blogger adapted by️ Zafer Zent (www.zaferzent.com)
  * Updated in 2019.6.11
  */
 
@@ -694,12 +695,12 @@ body ::-webkit-scrollbar-thumb:hover {
           <a href='#'>Archive</a>
         </li>
         <li>
-          <a href='#'>About</a>
+          <a href='/p/about.html'>About</a>
         </li>
         <li>
           <a href='#'>Contact</a>
         </li>
-        <li><form action='http://www.zaferzent.com/search' id='hbz-searchbox' method='get'><input name='q' placeholder='bir kelime yazın ve enter tuşuna basın' style='width:287px; background: #fff; border-radius: 5px; border:1px solid #ddd; padding:10px' type='text'/></form></li>
+        <li><form action='/search' id='hbz-searchbox' method='get'><input name='q' placeholder='Type to search...' style='width:287px; background: #fff; border-radius: 5px; border:1px solid #ddd; padding:10px' type='text'/></form></li>
       </ul>
     </nav>
 
@@ -780,39 +781,8 @@ body ::-webkit-scrollbar-thumb:hover {
 
   <b:include cond='data:top.showPlusOne' name='googlePlusBootstrap'/>
 </b:includable>
-            <b:includable id='backlinkDeleteIcon' var='backlink'>
-  <span expr:class='&quot;item-control &quot; + data:backlink.adminClass'>
-    <a expr:href='data:backlink.deleteUrl' expr:title='data:top.deleteBacklinkMsg'>
-      <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
-    </a>
-  </span>
-</b:includable>
-            <b:includable id='backlinks' var='post'>
-  <a name='links'/><h4><data:post.backlinksLabel/></h4>
-  <b:if cond='data:post.numBacklinks != 0'>
-    <dl class='comments-block' id='comments-block'>
-      <b:loop values='data:post.backlinks' var='backlink'>
-        <div class='collapsed-backlink backlink-control'>
-          <dt class='comment-title'>
-            <span class='backlink-toggle-zippy'>&#160;</span>
-            <a expr:href='data:backlink.url' rel='nofollow'><data:backlink.title/></a>
-            <b:include data='backlink' name='backlinkDeleteIcon'/>
-          </dt>
-          <dd class='comment-body collapseable'>
-            <data:backlink.snippet/>
-          </dd>
-          <dd class='comment-footer collapseable'>
-            <span class='comment-author'><data:post.authorLabel/> <data:backlink.author/></span>
-            <span class='comment-timestamp'><data:post.timestampLabel/> <data:backlink.timestamp/></span>
-          </dd>
-        </div>
-      </b:loop>
-    </dl>
-  </b:if>
-  <p class='comment-footer'>
-    <a class='comment-link' expr:href='data:post.createLinkUrl' expr:id='data:widget.instanceId + &quot;_backlinks-create-link&quot;' target='_blank'><data:post.createLinkLabel/></a>
-  </p>
-</b:includable>
+            <b:includable id='backlinkDeleteIcon' var='backlink'/>
+            <b:includable id='backlinks' var='post'/>
             <b:includable id='comment-form' var='post'>
   <div class='comment-form'>
     <a name='comment-form'/>
@@ -850,19 +820,12 @@ body ::-webkit-scrollbar-thumb:hover {
   </span>
 </b:includable>
             <b:includable id='comment_count_picker' var='post'>
-  <b:if cond='data:post.commentSource == 1'>
-    <span class='cmt_count_iframe_holder' expr:data-count='data:post.numComments' expr:data-onclick='data:post.addCommentOnclick' expr:data-post-url='data:post.url' expr:data-url='data:post.url.canonical.http'>
-    </span>
-  <b:else/>
-    <a class='comment-link' expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'>
-      <data:post.commentLabelFull/>:
-    </a>
-  </b:if>
+  <a class='comment-link' expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'>
+    <data:post.commentLabelFull/>:
+  </a>
 </b:includable>
             <b:includable id='comment_picker' var='post'>
-  <b:if cond='data:post.commentSource == 1'>
-    <b:include data='post' name='iframe_comments'/>
-  <b:elseif cond='data:post.showThreadedComments'/>
+  <b:if cond='data:post.showThreadedComments'>
     <b:include data='post' name='threaded_comments'/>
   <b:else/>
     <b:include data='post' name='comments'/>
@@ -972,11 +935,6 @@ body ::-webkit-scrollbar-thumb:hover {
       </div>
     </b:if>
 
-    <div id='backlinks-container'>
-    <div expr:id='data:widget.instanceId + &quot;_backlinks-container&quot;'>
-       <b:include cond='data:post.showBacklinks' data='post' name='backlinks'/>
-    </div>
-    </div>
   </div>
 </b:includable>
             <b:includable id='feedLinks'>
@@ -1004,15 +962,7 @@ body ::-webkit-scrollbar-thumb:hover {
   </div>
 </b:includable>
             <b:includable id='iframe_comments' var='post'>
-
-  <b:if cond='data:post.allowIframeComments'>
-    <script expr:src='data:post.iframeCommentSrc' type='text/javascript'/>
-    <div class='cmt_iframe_holder' expr:data-href='data:post.url.canonical' expr:data-viewtype='data:post.viewType'/>
-
-    <b:if cond='data:post.embedCommentForm == &quot;false&quot;'>
-      <a expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'><data:postCommentMsg/></a>
-    </b:if>
-  </b:if>
+  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
 </b:includable>
             <b:includable id='mobile-index-post' var='post'>
   <div class='mobile-date-outer date-outer'>
@@ -1529,7 +1479,7 @@ body ::-webkit-scrollbar-thumb:hover {
   <span>Blogger adapted by&#65039; <a href='http://twitter.com/zaferzent' rel='noopener' target='_blank'>@zaferzent</a></span>
 </footer>
 
-<script data-no-instant='' src='https://nanxiaobei.github.io/hugo-paper/js/highlight.min.js'/>
+<script src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js'/>
 
 <script data-no-instant=''>
   let body;
